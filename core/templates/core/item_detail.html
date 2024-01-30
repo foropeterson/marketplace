@@ -1,0 +1,23 @@
+{% extends 'core/base.html' %}
+
+{% block title %}{{ item.name }}{% endblock %}
+
+{% block content %}
+  <div class="container mx-auto mt-10">
+    <h1 class="text-3xl font-semibold mb-6">{{ item.name }}</h1>
+    <p>{{ item.description }}</p>
+    <p>Price: ${{ item.price }}</p>
+
+    {% if item.price > 150000 %}
+      <form method="post" action="{% url 'hire_item' item.id %}">
+        {% csrf_token %}
+        <button type="submit" class="py-2 px-6 bg-teal-500 hover:bg-teal-700 rounded-xl text-white">Hire</button>
+      </form>
+    {% else %}
+      <form method="post" action="{% url 'add_to_cart' item.id %}">
+        {% csrf_token %}
+        <button type="submit" class="py-2 px-6 bg-blue-500 hover:bg-blue-700 rounded-xl text-white">Add to Cart</button>
+      </form>
+    {% endif %}
+  </div>
+{% endblock %}
